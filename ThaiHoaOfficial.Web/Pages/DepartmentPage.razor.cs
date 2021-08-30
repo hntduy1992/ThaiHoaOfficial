@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using ThaiHoaOfficial.Shared.Models;
+using System.Threading;
+using ThaiHoaOfficial.Web.Components.Departments;
 
 namespace ThaiHoaOfficial.Web.Pages
 {
@@ -16,12 +18,12 @@ namespace ThaiHoaOfficial.Web.Pages
         public string SearchString = "";
         public Department SelectedItem = null;
         public HashSet<Department> SelectedItems = new HashSet<Department>();
-
         public IEnumerable<Department> Departments;
+        public CreateOrUpdateDepartment frmCreateOrUpdate;
 
         protected override async Task OnInitializedAsync()
         {
-            Departments = await httpClient.GetFromJsonAsync<List<Department>>("api/departments/danh-sach-phong-ban");
+            await LoadData();
         }
 
         public bool FilterFunc1(Department element) => FilterFunc(element, SearchString);
@@ -33,6 +35,15 @@ namespace ThaiHoaOfficial.Web.Pages
             if (element.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
+        }
+        private async Task LoadData()
+        {
+            Departments = await httpClient.GetFromJsonAsync<List<Department>>("api/departments/danh-sach-phong-ban");
+            await Task.Delay(3000);
+        }
+        public async Task ShowCreateDepartment()
+        {
+          await  frmCreateOrUpdate.ShowDialog(new Department());
         }
     }
 }

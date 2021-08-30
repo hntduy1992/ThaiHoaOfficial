@@ -1,7 +1,21 @@
 ﻿@page "/phong-ban"
+@using ThaiHoaOfficial.Web.Components.Departments 
 @inherits DepartmentPageBase
 
-<MudTable Items="@Departments" Hover="true" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="SelectedItem" Loading="@(Departments==null)">
+@inject ISnackbar Snackbar
+
+@if (Departments == null)
+{
+    <Loading></Loading>
+}
+<CreateOrUpdateDepartment @ref="frmCreateOrUpdate"></CreateOrUpdateDepartment>
+<MudToolBar>
+    <MudButton ButtonType="ButtonType.Button" Color="Color.Primary" Variant="Variant.Filled" OnClick="ShowCreateDepartment">
+        Thêm phòng/ban
+    </MudButton>
+</MudToolBar>
+
+<MudTable Items="@Departments" Dense="true" Hover="true" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="SelectedItem" >
     <ToolBarContent>
         <MudText Typo="Typo.h6">Danh sách phòng/ban</MudText>
         <MudSpacer />
@@ -12,14 +26,40 @@
         <MudTh>Thông báo</MudTh>
         <MudTh>Ngày tạo</MudTh>
         <MudTh>Trạng thái</MudTh>
-        <MudTh></MudTh>
+        <MudTh  Style="width:190px; text-align:center"></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Notification">@context.Notification</MudTd>
-        <MudTd DataLabel="CreatedDate">@context.CreatedDate</MudTd>
-        <MudTd DataLabel="Status">@context.Status</MudTd>
-        <MudTd DataLabel=""></MudTd>
+        <MudTd DataLabel="CreatedDate">@context.CreatedDate.ToShortDateString()</MudTd>
+        <MudTd DataLabel="Status">
+            @switch (context.Status)
+            {
+                case DepartmentStatus.Unconfirmed:
+                    <MudChip Icon="@Icons.Material.Filled.Error" Label="true" Color="Color.Default">@context.Status</MudChip>
+                    break;
+                case DepartmentStatus.Activited:
+                    <MudChip Icon="@Icons.Material.Filled.Done" Label="true" Color="Color.Success">@context.Status</MudChip>
+                    break;
+                case DepartmentStatus.Locked:
+                    <MudChip Icon="@Icons.Material.Filled.Lock" Label="true" Color="Color.Warning">@context.Status</MudChip>
+                    break;
+                case DepartmentStatus.Hidden:
+                    <MudChip Icon="@Icons.Material.Filled.VisibilityOff" Label="true" Color="Color.Tertiary">@context.Status</MudChip>
+                    break;
+                case DepartmentStatus.Deleted:
+                    <MudChip Icon="@Icons.Material.Filled.AutoDelete" Label="true" Color="Color.Error">@context.Status</MudChip>
+                    break;
+            }
+        </MudTd>
+        <MudTd DataLabel="" Style="width:150px">
+            <MudButton ButtonType="ButtonType.Button" Color="Color.Warning" Variant="Variant.Text">
+               Cập nhật
+            </MudButton>
+            <MudButton ButtonType="ButtonType.Button" Color="Color.Error" Variant="Variant.Text">
+                Xóa
+            </MudButton>
+        </MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager />

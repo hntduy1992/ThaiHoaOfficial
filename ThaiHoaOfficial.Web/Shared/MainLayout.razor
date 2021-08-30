@@ -1,7 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
 <MudThemeProvider />
-<MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
     <MudAppBar Elevation="1">
@@ -11,12 +10,14 @@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
         <MudDrawerHeader>
-            <MudText Typo="Typo.h5" Class="mt-1">THÁI HÒA OFFICIAL</MudText>
+            <MudText Typo="Typo.h5" Class="mt-1" Style="width:100%; text-align:center">THÁI HÒA <br /> E-OFFICIAL</MudText>
         </MudDrawerHeader>
        <NavMenu/>
     </MudDrawer>
     <MudMainContent>
-        @Body
+        <div style="padding: 15px">
+            @Body
+        </div>
     </MudMainContent>
 </MudLayout>
 

@@ -1,0 +1,18 @@
+﻿@inherits CreateOrUpdateDepartmentBase
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@Department">
+            <DataAnnotationsValidator />
+            <MudTextField Label="First name"
+                          @bind-Value="Department.Name" For="@(() => Department.Name)" />
+            <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                          @bind-Value="Department.Status" For="@(() => Department.Status)" />
+            <MudTextField Label="Email" Class="mt-3"
+                          @bind-Value="Department.Notification" For="@(() => Department.Notification)" />           
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success">Lưu</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="px-10">Hủy</MudButton>
+    </DialogActions>
+</MudDialog>

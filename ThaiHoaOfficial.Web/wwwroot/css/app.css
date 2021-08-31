@@ -1,1 +1,9 @@
-﻿
+﻿body {
+    background-color: var(--mud-palette-action-default-hover);
+}
+
+/*Dialog size*/
+.dialog-basic{
+    width: 400px;
+}
+

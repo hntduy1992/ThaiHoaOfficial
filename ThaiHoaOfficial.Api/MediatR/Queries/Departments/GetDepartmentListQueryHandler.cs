@@ -10,11 +10,11 @@ using ThaiHoaOfficial.Shared.Models;
 
 namespace ThaiHoaOfficial.Api.MediatR.Queries.Departments
 {
-    public class GetDepartmentListHandler : IRequestHandler<GetDepartmentListQuery, List<Department>>
+    public class GetDepartmentListQueryHandler : IRequestHandler<GetDepartmentListQuery, List<Department>>
     {
         private readonly AppDbContext _context;
 
-        public GetDepartmentListHandler(AppDbContext context)
+        public GetDepartmentListQueryHandler(AppDbContext context)
         {
             _context = context;
         }

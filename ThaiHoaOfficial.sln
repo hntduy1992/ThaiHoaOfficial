@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThaiHoaOfficial.Shared", "ThaiHoaOfficial.Shared\ThaiHoaOfficial.Shared.csproj", "{35446679-A659-4C9E-98B5-BFBECFAB3585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThaiHoaOfficial.Shared", "ThaiHoaOfficial.Shared\ThaiHoaOfficial.Shared.csproj", "{35446679-A659-4C9E-98B5-BFBECFAB3585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThaiHoaOfficial.Api", "ThaiHoaOfficial.Api\ThaiHoaOfficial.Api.csproj", "{87867597-1277-4D1A-809B-37F9965C4898}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThaiHoaOfficial.Api", "ThaiHoaOfficial.Api\ThaiHoaOfficial.Api.csproj", "{87867597-1277-4D1A-809B-37F9965C4898}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThaiHoaOfficial.Web", "ThaiHoaOfficial.Web\ThaiHoaOfficial.Web.csproj", "{CE4D065B-E460-42CD-A82C-84710AF012AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThaiHoaOfficial.Web", "ThaiHoaOfficial.Web\ThaiHoaOfficial.Web.csproj", "{CE4D065B-E460-42CD-A82C-84710AF012AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

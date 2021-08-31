@@ -1,27 +1,74 @@
 ﻿@page "/phong-ban"
 @inherits DepartmentPageBase
 
-<MudTable Items="@Departments" Hover="true" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="SelectedItem" Loading="@(Departments==null)">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">Danh sách phòng/ban</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
-        <MudTh>Tên</MudTh>
-        <MudTh>Thông báo</MudTh>
-        <MudTh>Ngày tạo</MudTh>
-        <MudTh>Trạng thái</MudTh>
-        <MudTh></MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Notification">@context.Notification</MudTd>
-        <MudTd DataLabel="CreatedDate">@context.CreatedDate</MudTd>
-        <MudTd DataLabel="Status">@context.Status</MudTd>
-        <MudTd DataLabel=""></MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager />
-    </PagerContent>
-</MudTable>
+@inject ISnackbar Snackbar
+
+@if (Departments == null)
+{
+    <Loading></Loading>
+}
+else
+{
+    <MudToolBar>
+        <MudButton ButtonType="ButtonType.Button" Color="Color.Primary" Variant="Variant.Filled" OnClick="ShowCreateDepartment">
+            Thêm phòng/ban
+        </MudButton>
+    </MudToolBar>
+
+    <MudTable T="Department" Items="@Departments" Dense="true" Hover="true" Filter="new Func<Department,bool>(FilterFunc1)" @bind-SelectedItem="SelectedItem" OnRowClick="@((e)=>ShowUpdateDepartment(e.Item))">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Danh sách phòng/ban</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchString" Placeholder="Nhập nội dung cần tìm..." Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Department, object>(x=>x.Name)">TÊN PHÒNG BAN</MudTableSortLabel>
+            </MudTh>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<Department, object>(x=>x.Notification)">THÔNG BÁO</MudTableSortLabel>
+            </MudTh>
+            <MudTh Style="width:140px; ">
+                <MudTableSortLabel SortBy="new Func<Department, object>(x=>x.CreatedDate)">NGÀY TẠO</MudTableSortLabel>
+
+            </MudTh>
+            <MudTh Style="width:150px; ">
+                <MudTableSortLabel SortBy="new Func<Department, object>(x=>x.Status)">TRẠNG THÁI</MudTableSortLabel>
+            </MudTh>
+            <MudTh Style="width:50px; text-align:center">XÓA</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Notification">@context.Notification</MudTd>
+            <MudTd DataLabel="CreatedDate" Style="width:140px; ">@context.CreatedDate.ToString("dd/MM/yyyy")</MudTd>
+            <MudTd DataLabel="Status" Style="width:150px; ">
+                @switch (context.Status)
+                {
+                    case DepartmentStatus.Unconfirmed:
+                        <MudChip Icon="@Icons.Material.Filled.Error" Label="true" Color="Color.Default">@context.Status</MudChip>
+                        break;
+                    case DepartmentStatus.Activited:
+                        <MudChip Icon="@Icons.Material.Filled.Done" Label="true" Color="Color.Success">@context.Status</MudChip>
+                        break;
+                    case DepartmentStatus.Locked:
+                        <MudChip Icon="@Icons.Material.Filled.Lock" Label="true" Color="Color.Warning">@context.Status</MudChip>
+                        break;
+                    case DepartmentStatus.Hidden:
+                        <MudChip Icon="@Icons.Material.Filled.VisibilityOff" Label="true" Color="Color.Tertiary">@context.Status</MudChip>
+                        break;
+                    case DepartmentStatus.Deleted:
+                        <MudChip Icon="@Icons.Material.Filled.AutoDelete" Label="true" Color="Color.Error">@context.Status</MudChip>
+                        break;
+                }
+            </MudTd>
+            <MudTd DataLabel="Xóa" Style="width: 50px">
+                <MudIconButton ButtonType="ButtonType.Button" Color="Color.Error" Variant="Variant.Text" Icon="@Icons.Material.Filled.Delete" aria-label="Delete" OnClick="@(()=>ShowDeleteDepartment(context))">
+                </MudIconButton>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager InfoFormat="Từ {first_item} đến {last_item} trong {all_items}" RowsPerPageString="Dòng mỗi trang" />
+        </PagerContent>
+    </MudTable>
+}
+

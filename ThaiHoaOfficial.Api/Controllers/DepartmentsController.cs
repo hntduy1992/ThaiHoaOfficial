@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ThaiHoaOfficial.Api.MediatR.Commands.Departments;
 using ThaiHoaOfficial.Api.MediatR.Queries.Departments;
+using ThaiHoaOfficial.Shared.CommandModels;
 using ThaiHoaOfficial.Shared.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,35 +25,36 @@ namespace ThaiHoaOfficial.Api.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        [Route("danh-sach-phong-ban")]
+        [Route("get-department-list")]
         public async Task<IEnumerable<Department>> GetDepartments()
         {
             return await _mediator.Send(new GetDepartmentListQuery());
         }
 
-        // GET api/<DepartmentsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        
 
         // POST api/<DepartmentsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("create-department")]
+        public async Task<bool> CreateDepartment([FromBody] CreateOrUpdateDepartmentModel newDepartment)
         {
+            return await _mediator.Send(new CreateDepartmentCommand(newDepartment));
         }
 
         // PUT api/<DepartmentsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route("update-department")]
+        public async Task<bool> UpdateDepartment([FromBody] CreateOrUpdateDepartmentModel updateDepartment)
         {
+            return await _mediator.Send(new UpdateDepartmentCommand(updateDepartment));
         }
 
         // DELETE api/<DepartmentsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("delete-department/{id}")]
+        public async Task<bool> DeleteDepartment([FromRoute]Guid id) 
         {
+            return await _mediator.Send(new DeleteDepartmentCommand(id));
         }
     }
 }

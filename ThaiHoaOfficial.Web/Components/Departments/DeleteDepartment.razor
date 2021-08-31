@@ -1,0 +1,21 @@
+﻿<MudDialog>
+    <DialogContent>
+        Bạn đang xóa @Department.Name
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Hủy</MudButton>
+        <MudButton Color="Color.Error" OnClick="Submit">Đồng ý</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public Department Department { get; set; }
+    [Inject] private HttpClient HttpClient { get; set; }
+    async Task Submit()
+    {
+        var result = await HttpClient.DeleteAsync($"/api/departments/delete-department/{Department.Id}");
+        MudDialog.Close(DialogResult.Ok(result.IsSuccessStatusCode));
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

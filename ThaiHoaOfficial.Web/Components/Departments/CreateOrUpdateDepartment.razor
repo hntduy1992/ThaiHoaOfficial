@@ -1,18 +1,60 @@
-﻿@inherits CreateOrUpdateDepartmentBase
-<MudDialog>
+﻿@using System.ComponentModel.DataAnnotations
+<MudDialog DisableSidePadding="true">
     <DialogContent>
-        <EditForm Model="@Department">
-            <DataAnnotationsValidator />
-            <MudTextField Label="First name"
-                          @bind-Value="Department.Name" For="@(() => Department.Name)" />
-            <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
-                          @bind-Value="Department.Status" For="@(() => Department.Status)" />
-            <MudTextField Label="Email" Class="mt-3"
-                          @bind-Value="Department.Notification" For="@(() => Department.Notification)" />           
-        </EditForm>
+        <div class="dialog-basic" style="padding:10px">
+            <EditForm @ref="form" id="frmSubmitForm" Model="@Department" OnValidSubmit="Submited">
+                <DataAnnotationsValidator />
+                <MudTextField Label="Tên phòng/ban"
+                              @bind-Value="Department.Name" For="@(() => Department.Name)" />
+                <MudSelect T="DepartmentStatus" Label="Trạng thái" Class="mt-3" @bind-Value="Department.Status" For="@(() => Department.Status)">
+                    <MudSelectItem T="DepartmentStatus" Value="DepartmentStatus.Unconfirmed" />
+                    <MudSelectItem T="DepartmentStatus" Value="DepartmentStatus.Activited" />
+                    <MudSelectItem T="DepartmentStatus" Value="DepartmentStatus.Hidden" />
+                    <MudSelectItem T="DepartmentStatus" Value="DepartmentStatus.Locked" />
+                    <MudSelectItem T="DepartmentStatus" Value="DepartmentStatus.Deleted" />
+                </MudSelect>
+                <MudTextField T="string" Label="Thông báo" Variant="Variant.Text" @bind-Value="Department.Notification" Lines="5" Clearable="true" />
+            </EditForm>
+        </div>
     </DialogContent>
     <DialogActions>
-        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Success">Lưu</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="px-10">Hủy</MudButton>
+        <MudButton Color="Color.Success" UserAttributes="UserAttributes" ButtonType="ButtonType.Submit">Lưu</MudButton>
+        <MudButton Color="Color.Default" OnClick="Cancel">Hủy</MudButton>
     </DialogActions>
 </MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    private EditForm form;
+    private Dictionary<string, object> UserAttributes = new Dictionary<string, object>();
+    protected async override Task OnInitializedAsync()
+    {
+        UserAttributes.Add("Form", "frmSubmitForm");
+    }
+    [Parameter]
+    public CreateOrUpdateDepartmentModel Department { get; set; }
+
+    [Inject] HttpClient HttpClient { get; set; }
+
+    private async Task Submited()
+    {
+        HttpResponseMessage result;
+        if (Department.Id == Guid.Empty)
+        {
+            result = await HttpClient.PostAsJsonAsync<CreateOrUpdateDepartmentModel>("/api/departments/create-department", Department);
+        }
+        else
+        {
+            result = await HttpClient.PutAsJsonAsync<CreateOrUpdateDepartmentModel>("/api/departments/update-department", Department);
+        }
+        if (result.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+    }
+    private async Task Cancel()
+    {
+        MudDialog.Close(DialogResult.Cancel());
+    }
+}
+
+

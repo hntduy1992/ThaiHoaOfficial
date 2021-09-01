@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThaiHoaOfficial.Api.Data;
 
 namespace ThaiHoaOfficial.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210831135849_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,15 +48,15 @@ namespace ThaiHoaOfficial.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0ea1209-c1df-45cc-b713-9797d6e997d4"),
-                            CreatedDate = new DateTime(2021, 9, 1, 22, 34, 15, 471, DateTimeKind.Local).AddTicks(4814),
+                            Id = new Guid("0cf4de41-bd00-4baa-ab4c-eb87309eeb76"),
+                            CreatedDate = new DateTime(2021, 8, 31, 20, 58, 48, 764, DateTimeKind.Local).AddTicks(2102),
                             Name = "Administrator",
                             Status = 3
                         },
                         new
                         {
-                            Id = new Guid("afa7a04c-77d7-4782-b178-8ba44111ddf9"),
-                            CreatedDate = new DateTime(2021, 9, 1, 22, 34, 15, 471, DateTimeKind.Local).AddTicks(9065),
+                            Id = new Guid("c2ee9aad-279a-435d-afed-0bb732f23998"),
+                            CreatedDate = new DateTime(2021, 8, 31, 20, 58, 48, 764, DateTimeKind.Local).AddTicks(6587),
                             Name = "Phòng CNTT",
                             Status = 0
                         });
@@ -87,6 +89,9 @@ namespace ThaiHoaOfficial.Api.Migrations
                     b.Property<bool>("IsMale")
                         .HasColumnType("bit");
 
+                    b.Property<int>("LoginMode")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
@@ -106,13 +111,14 @@ namespace ThaiHoaOfficial.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f89735cf-6b3b-4054-a961-cc88ecae0146"),
-                            CreatedDate = new DateTime(2021, 9, 1, 22, 34, 15, 473, DateTimeKind.Local).AddTicks(2743),
+                            Id = new Guid("0a58e194-0cb4-4838-83a3-f728253f4494"),
+                            CreatedDate = new DateTime(2021, 8, 31, 20, 58, 48, 766, DateTimeKind.Local).AddTicks(573),
                             DateOfBirth = new DateTime(1992, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = new Guid("d0ea1209-c1df-45cc-b713-9797d6e997d4"),
+                            DepartmentId = new Guid("0cf4de41-bd00-4baa-ab4c-eb87309eeb76"),
                             EmailAddress = "hntduy1992@gmail.com",
                             FullName = "Hồ Ngọc Tư Duy",
                             IsMale = true,
+                            LoginMode = 1,
                             Password = "",
                             PhoneNumber = "0939433628",
                             Status = 1

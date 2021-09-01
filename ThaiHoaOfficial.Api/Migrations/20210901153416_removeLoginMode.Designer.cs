@@ -10,8 +10,8 @@ using ThaiHoaOfficial.Api.Data;
 namespace ThaiHoaOfficial.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210829151059_Init")]
-    partial class Init
+    [Migration("20210901153416_removeLoginMode")]
+    partial class removeLoginMode
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,15 +48,15 @@ namespace ThaiHoaOfficial.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2ea9b4dc-60d9-4bde-88af-07c878e9229f"),
-                            CreatedDate = new DateTime(2021, 8, 29, 22, 10, 58, 233, DateTimeKind.Local).AddTicks(289),
+                            Id = new Guid("d0ea1209-c1df-45cc-b713-9797d6e997d4"),
+                            CreatedDate = new DateTime(2021, 9, 1, 22, 34, 15, 471, DateTimeKind.Local).AddTicks(4814),
                             Name = "Administrator",
                             Status = 3
                         },
                         new
                         {
-                            Id = new Guid("ec7d11f9-0a8e-4488-90e6-16837a88cdd6"),
-                            CreatedDate = new DateTime(2021, 8, 29, 22, 10, 58, 233, DateTimeKind.Local).AddTicks(5316),
+                            Id = new Guid("afa7a04c-77d7-4782-b178-8ba44111ddf9"),
+                            CreatedDate = new DateTime(2021, 9, 1, 22, 34, 15, 471, DateTimeKind.Local).AddTicks(9065),
                             Name = "Phòng CNTT",
                             Status = 0
                         });
@@ -89,6 +89,9 @@ namespace ThaiHoaOfficial.Api.Migrations
                     b.Property<bool>("IsMale")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -105,13 +108,14 @@ namespace ThaiHoaOfficial.Api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fe26dc1a-37da-400e-86cf-49a51dcd1554"),
-                            CreatedDate = new DateTime(2021, 8, 29, 22, 10, 58, 234, DateTimeKind.Local).AddTicks(9728),
+                            Id = new Guid("f89735cf-6b3b-4054-a961-cc88ecae0146"),
+                            CreatedDate = new DateTime(2021, 9, 1, 22, 34, 15, 473, DateTimeKind.Local).AddTicks(2743),
                             DateOfBirth = new DateTime(1992, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DepartmentId = new Guid("2ea9b4dc-60d9-4bde-88af-07c878e9229f"),
+                            DepartmentId = new Guid("d0ea1209-c1df-45cc-b713-9797d6e997d4"),
                             EmailAddress = "hntduy1992@gmail.com",
                             FullName = "Hồ Ngọc Tư Duy",
                             IsMale = true,
+                            Password = "",
                             PhoneNumber = "0939433628",
                             Status = 1
                         });

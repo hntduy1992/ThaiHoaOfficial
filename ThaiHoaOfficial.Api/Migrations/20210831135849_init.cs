@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThaiHoaOfficial.Api.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,6 +32,8 @@ namespace ThaiHoaOfficial.Api.Migrations
                     IsMale = table.Column<bool>(type: "bit", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LoginMode = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -50,17 +52,17 @@ namespace ThaiHoaOfficial.Api.Migrations
             migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "Id", "CreatedDate", "Name", "Notification", "Status" },
-                values: new object[] { new Guid("2ea9b4dc-60d9-4bde-88af-07c878e9229f"), new DateTime(2021, 8, 29, 22, 10, 58, 233, DateTimeKind.Local).AddTicks(289), "Administrator", null, 3 });
+                values: new object[] { new Guid("0cf4de41-bd00-4baa-ab4c-eb87309eeb76"), new DateTime(2021, 8, 31, 20, 58, 48, 764, DateTimeKind.Local).AddTicks(2102), "Administrator", null, 3 });
 
             migrationBuilder.InsertData(
                 table: "Departments",
                 columns: new[] { "Id", "CreatedDate", "Name", "Notification", "Status" },
-                values: new object[] { new Guid("ec7d11f9-0a8e-4488-90e6-16837a88cdd6"), new DateTime(2021, 8, 29, 22, 10, 58, 233, DateTimeKind.Local).AddTicks(5316), "Phòng CNTT", null, 0 });
+                values: new object[] { new Guid("c2ee9aad-279a-435d-afed-0bb732f23998"), new DateTime(2021, 8, 31, 20, 58, 48, 764, DateTimeKind.Local).AddTicks(6587), "Phòng CNTT", null, 0 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CreatedDate", "DateOfBirth", "DepartmentId", "EmailAddress", "FullName", "IsMale", "PhoneNumber", "Status" },
-                values: new object[] { new Guid("fe26dc1a-37da-400e-86cf-49a51dcd1554"), new DateTime(2021, 8, 29, 22, 10, 58, 234, DateTimeKind.Local).AddTicks(9728), new DateTime(1992, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("2ea9b4dc-60d9-4bde-88af-07c878e9229f"), "hntduy1992@gmail.com", "Hồ Ngọc Tư Duy", true, "0939433628", 1 });
+                columns: new[] { "Id", "CreatedDate", "DateOfBirth", "DepartmentId", "EmailAddress", "FullName", "IsMale", "LoginMode", "Password", "PhoneNumber", "Status" },
+                values: new object[] { new Guid("0a58e194-0cb4-4838-83a3-f728253f4494"), new DateTime(2021, 8, 31, 20, 58, 48, 766, DateTimeKind.Local).AddTicks(573), new DateTime(1992, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new Guid("0cf4de41-bd00-4baa-ab4c-eb87309eeb76"), "hntduy1992@gmail.com", "Hồ Ngọc Tư Duy", true, 1, "", "0939433628", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_DepartmentId",

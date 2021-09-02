@@ -32,6 +32,7 @@ namespace ThaiHoaOfficial.Api.Data
                     DateOfBirth = DateTime.Parse("20/05/1992"),
                     EmailAddress = "hntduy1992@gmail.com",
                     PhoneNumber = "0939433628",
+                    Password = "",
                     IsMale = true
                 }
                 );

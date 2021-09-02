@@ -26,12 +26,17 @@ namespace ThaiHoaOfficial.Api.Controllers
         }
         [HttpGet]
         [Route("get-department-list")]
-        public async Task<IEnumerable<Department>> GetDepartments()
+        public async Task<IEnumerable<Department>> GetDepartmentsAsync()
         {
             return await _mediator.Send(new GetDepartmentListQuery());
         }
+        [HttpGet]
+        [Route("get-department/{id}")]
+        public async Task<Department> GetDepartmentByIdAsync([FromRoute] Guid id)
+        {
+            return await _mediator.Send(new GetDepartmentByIdQuery(id));
+        }
 
-        
 
         // POST api/<DepartmentsController>
         [HttpPost]
